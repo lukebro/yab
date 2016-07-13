@@ -1,0 +1,41 @@
+{
+  "name": "yab",
+  "version": "0.1.0",
+  "description": "yet another bootstrapper",
+  "main": "index.js",
+  "bin": {
+    "yab": "lib/yab.js"
+  },
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lukebro/yab.git"
+  },
+  "keywords": [
+    "boilerplate",
+    "generator",
+    "stack",
+    "custom",
+    "development",
+    "dev",
+    "tool",
+    "scaffold",
+    "bootstrap",
+    "cli",
+    "cli-app",
+    "frontend",
+    "web"
+  ],
+  "author": "Lukasz Brodowski",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lukebro/yab/issues"
+  },
+  "homepage": "https://github.com/lukebro/yab#readme",
+  "dependencies": {
+    "archiver": "^1.0.0",
+    "decompress-zip": "^0.3.0"
+  }
+}
