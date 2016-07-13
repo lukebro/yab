@@ -21,7 +21,7 @@ Here are the basic commands that yab CLI offers.
 
 ```bash
 # Create a new template of the current directory and give it a name.
-# yab will save an entire copy of the directory excluding .git/, node_modules/ and bower_components/.
+# yab will save an entire copy of the directory
 yab this <name>
 ```
 
