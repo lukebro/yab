@@ -43,6 +43,11 @@ yab list
 yab remove <name>
 ```
 
+```bash
+# Show all commands.
+yab help
+```
+
 ## storage
 yab stores the templates under the `~/.yab` directory.  Each template is stored and compressed in a `.zip` file.  Feel free to manually insert or remove zip files into this directory for yab to use.
 
