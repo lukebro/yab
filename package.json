@@ -1,6 +1,6 @@
 {
   "name": "yab",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "yet another bootstrapper",
   "main": "index.js",
   "bin": {
