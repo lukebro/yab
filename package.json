@@ -1,10 +1,10 @@
 {
   "name": "yab",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "yet another bootstrapper",
   "main": "index.js",
   "bin": {
-    "yab": "lib/yab.js"
+    "yab": "bin/yab"
   },
   "scripts": {
     "test": "node test"
