@@ -1,5 +1,7 @@
 'use strict'
 
-import cli from './yab/cli'
+import Client from './yab/Client'
+
+const cli = new Client()
 
 cli.init()

@@ -1,5 +1,7 @@
 import chalk from 'chalk'
 
-export default `
+const help = `
 Help text goes here.
 `
+
+export default help

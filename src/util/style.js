@@ -3,45 +3,52 @@ import chalk from 'chalk'
 const tag = chalk.blue.italic('yab: ')
 const tagHolder = Array(6).join(' ')
 
-const Log = {
+const style = {
 
 	/**
 	 * A normal message
 	 * 
 	 * @param  {String} message Message to print to console
+	 * @return {String}
 	 */
 	msg(message) {
-		console.log(tag + chalk.green(message))
+		return tag + chalk.green(message)
 	},
 
 	/**
 	 * List a set of items
 	 * 
 	 * @param  {Array}  items Items to print to console
+	 * @return {String}
 	 */
 	list(items = []) {
+		const output = []
 		items.forEach(function (item) {
-			console.log(tagHolder + chalk.red(item))
+			output.push(tagHolder + chalk.red(item))
 		})
+
+		return output.join('\n')
 	},
 
 	/**
 	 * A warning message
 	 * 
 	 * @param  {String} message Warning to print to console
+	 * @return {String}
 	 */
 	warn(message) {
-		console.log(tag + chalk.yellow(message))
+		return tag + chalk.yellow(message)
 	},
 
 	/**
 	 * A error message
 	 * 
 	 * @param  {String} message Error to print to console
+	 * @return {String}
 	 */
 	error(message) {
-		console.log(tag + chalk.red(message))
+		return tag + chalk.red(message)
 	}
 }
 
-export default Log
+export default style

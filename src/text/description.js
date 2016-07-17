@@ -1,5 +1,7 @@
 import chalk from 'chalk'
 
-export default `	
+const description = `	
 Description text goes here.
 `
+
+export default description

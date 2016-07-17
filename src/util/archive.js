@@ -2,7 +2,7 @@ import fs from 'fs'
 import archiver from 'archiver'
 import decompress from 'decompress-zip'
 
-class Archive {
+const Archive = {
 
 	/**
 	 * Zip a directory
@@ -12,7 +12,7 @@ class Archive {
 	 * @param  {String} toPath   Path where the zipped file should go
 	 * @param  {Object} options  Options for zipping file
 	 */
-	static zip(name, fromPath, toPath, ignore = []) {
+	zip(name, fromPath, toPath, ignore = []) {
 		const archive = archiver('zip')
 
 		archive.pipe(fs.createWriteStream(toPath + '/' + name))
@@ -23,7 +23,7 @@ class Archive {
 			dot: true,
 			ignore: ignore,
 		}]).finalize()
-	}
+	},
 
 	/**
 	 * Unzip a directory
@@ -31,7 +31,7 @@ class Archive {
 	 * @param  {String} fromPath Path of zip file
 	 * @param  {String} toPath   Path where to unzip file
 	 */
-	static unzip(fromPath, toPath) {
+	unzip(fromPath, toPath) {
 
 		if (! fs.existsSync(fromPath)) {
 			throw Error('File does not exist')
