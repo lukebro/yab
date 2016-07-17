@@ -1,7 +1,8 @@
 import fs from 'fs'
 import meow from 'meow'
 import path from 'path'
-import config from '../config'
+import chalk from 'chalk'
+import Log from '../util/Log'
 import help from '../text/help'
 import description from '../text/description'
 
@@ -10,26 +11,26 @@ class Client {
 	/**
 	 * Create a new instance of a receiver
 	 */
-	constructor() {
+	constructor(config) {
 		this.config = config
+		this.commands = {}
 		this.template = path.resolve(process.env.HOME + '/.yab')
 		this.current = process.cwd()
-		this.cli = meow({
-			description: description,
-			help: help
-		}, {
-			alias: this.config.options
-		})
-		this.input = this.cli.input[0] == null ? 'help' : this.cli.input[0]
+		this.log = new Log
+
+		this.loadCommands()
+		this.initCli()
 	}
 
 	/**
 	 * Initialize the receiver sequence
 	 */
 	init() {
-		this.before()
+		if (! fs.existsSync(this.template)) {
+			fs.mkdirSync(this.template);
+		}
+
 		this.execute()
-		this.after()
 	}
 
 	/**
@@ -41,38 +42,98 @@ class Client {
 	}
 
 	/**
-	 * Do this before every command call
+	 * Load the command from config
 	 */
-	before() {
-		if (! fs.existsSync(this.template)) {
-			fs.mkdirSync(this.template);
+	loadCommands() {
+		for (let command in this.config.commands) {
+			this.commands[command] = this.parseCommand(this.config.commands[command])
 		}
+		
 	}
 
 	/**
-	 * Do this after every command call
+	 * Parse the command and create a new instance
+	 * @param  {Object} command 
+	 * @return {Object}
 	 */
-	after() {}
+	parseCommand(command) {
+		const cmd = new command(this.log)
+		return { 
+			name: cmd.name,
+			description: cmd.description,
+			_: cmd
+		}
+	}
 
 	/**
 	 * Execute the command
 	 */
 	execute() {
-		const command = this.isCommand(this.input) ? (new this.config.commands[this.input](this)) : (new this.config.commands.init(this))
-
-		const logs = command.run()
-
-		this.console(...logs)
+		const name = this.isCommand(this.input) ? this.input : 'init'
+		const command = this.commands[name]._
+		
+		command.setArgs(this.cli.inputs)
+		command.setFlags(this.cli.flags)
+		command.setConfig(this.config)
+		command.execute()
 	}
 
 	/**
-	 * Print logs to console
-	 * 
+	 * Initialize the CLI
 	 */
-	console(...logs) {
-		logs.forEach(function (log) {
-			console.log(log)
+	initCli() {
+		this.cli = meow({
+			description: this.buildDescription(),
+			help: this.buildHelp()
 		})
+
+		this.input = this.cli.input[0] == null ? 'list' : this.cli.input[0]
+	}
+
+	/**
+	 * Build the help text
+	 * 
+	 * @return {String}
+	 */
+	buildHelp() {
+		const output = []
+		const longest = this.longestCommand()
+
+		output.push(chalk.blue.italic.bold('commands'))
+		for (let command in this.commands) {
+			output.push(Array(6).join(' ')
+				+ chalk.bold.red(this.commands[command].name)
+				+ Array(this.commands[command].name.length - longest).join(' ')
+				+ chalk.white(' - ' + this.commands[command].description))
+		}
+
+		return output.join('\n')
+	}
+
+	/**
+	 * Build the description for the CLI
+	 *
+	 * @return {String}
+	 */
+	buildDescription() {
+		return chalk.red.bold.italic('yab: ') + ' ' + chalk.white.bold.italic('yet another bootstrapper')
+	}
+
+	/**
+	 * Get the length of the longest command
+	 * 
+	 * @return {Number}
+	 */
+	longestCommand() {
+		let length = 0
+
+		for (let command in this.commands) {
+			if (this.commands[command].name.length > length) {
+				length = this.commands[command].name.length 
+			}
+		}
+
+		return length
 	}
 }
 

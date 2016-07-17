@@ -2,8 +2,15 @@ import Command from '../yab/Command'
 
 class List extends Command {
 
+	configure() {
+		this.setName('list')
+			.setDescription('list all possible values')
+
+		return this
+	}
+
 	execute() {
-		this.log.msg('YAY!')
+		this.warn('oh no!')
 	}
 
 }

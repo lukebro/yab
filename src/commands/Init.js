@@ -2,9 +2,14 @@ import Command from '../yab/Command'
 
 class Init extends Command {
 
+	configure() {
+		this.setName('init')
+			.setDescription('this is a test command')
+	}
+
 	execute() {
-		console.log(this.flags)
-		this.log.warn('omg noO!')
+		this.info('hello')
+		this.info('welcome!')
 	}
 
 }

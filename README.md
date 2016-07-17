@@ -22,30 +22,30 @@ npm install -g yab
 yab keeps its interface simple with these commands:
 
 ```bash
-# Create a new template of the current directory and give it a name.
+# Create a new template of the current directory and give it a name
 # yab will save an entire copy of the directory
 yab this <name>
 ```
 
 ```bash
-# Scaffold the current directory with a template.
+# Scaffold the current directory with a template
 # yab will add the template to the current directory
 yab <name>
 ```
 
 ```bash
-# List the current templates saved in yab.
+# List the current templates saved in yab
 yab list
 ```
 
 ```bash
-# Remove a template.
+# Remove a template
 yab remove <name>
 ```
 
 ```bash
-# Show all commands.
-yab help
+# Show help menu
+yab --help
 ```
 
 ## storage

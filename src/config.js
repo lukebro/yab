@@ -6,9 +6,6 @@ const config = {
 		'list': List,
 		'init': Init
 	},
-	options: {
-		v: 'version'
-	},
 	ignore: ['**/node_modules/', '**/node_modules/**', '**/bower_components/', '**/bower_components/**', '**/.git/', '**/.git/**']
 }
 

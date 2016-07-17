@@ -1,54 +1,60 @@
-import style from '../util/style'
-
 class Command {
 
 	/**
 	 * Create a new instance of a command
-	 * @param  {Client} cli
-	 */
-	constructor(client) {
-		this.client = client
-		this.logs = []
-		this.flags = client.cli.flags
-		this.input = client.cli.input
-		this.config = client.cli.config
-		const that = this
-		this.log = {
-			msg(log) {
-				that.logs.push(style.msg(log))
-			},
-
-			list(log) {
-				that.logs.push(style.list(log))
-			},
-
-			warn(log) {
-				that.logs.push(style.warn(log))
-			},
-
-			error(log) {
-				that.logs.push(style.error(log))
-			}
-		}
-	}
-
-	/**
-	 * Command to be executed
-	 * @return {Array} The output of the command
-	 */
-	execute() {}
-
-	/**
-	 * Run the command inside the client
 	 * 
-	 * @param  {Client} cli
-	 * @return {Array}
+	 * @param  {Log} output
 	 */
-	run() {
-		this.execute()
+	constructor(output) {
+		this.log = output
+		this.info = output.info
+		this.list = output.list
+		this.warn = output.warn
+		this.error = output.error
+		this.name = 'Command'
+		this.description = 'Command description'
 
-		return this.logs
+		this.configure()
 	}
+
+	/**
+	 * Configure the command options
+	 */
+	configure() {
+		throw new Error("Must override Command.configure")
+	}
+
+	/**
+	 * Execute the command
+	 */
+	execute() {
+		throw new Error("Must override Command.execute")
+	}
+
+	setName(name) {
+		this.name = name
+
+		return this
+	}
+
+	setDescription(description) {
+		this.description = description
+
+		return this
+	}
+
+	setArgs(args) {
+		this.args = args
+	}
+
+	setFlags(flags) {
+		this.flags = flags
+	}
+
+	setConfig(config) {
+		this.config = config
+	}
+
 }
 
 export default Command
