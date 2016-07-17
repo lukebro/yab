@@ -2,15 +2,21 @@ import Command from '../yab/Command'
 
 class List extends Command {
 
+	/**
+	 * Configure the command
+	 */
 	configure() {
 		this.setName('list')
-			.setDescription('list all possible values')
+			.setDescription('list all available templates')
 
 		return this
 	}
 
+	/**
+	 * Execute the command
+	 */
 	execute() {
-		this.warn('oh no!')
+		this.info('Listing all the templates.')
 	}
 
 }

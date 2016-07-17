@@ -1,13 +1,35 @@
 import chalk from 'chalk'
 
-/**
- * @todo this.tag does not work............ no idea figure it out
- */
 class Log {
 
+	/**
+	 * Create a new instance of Log
+	 */
 	constructor() {
 		this.tag = chalk.red.bold.italic('yab: ')
 		this.tagHolder = Array(6).join(' ')
+	}
+
+	/**
+	 * Setter for tag
+	 * 
+	 * @param  {String} tag [description]
+	 */
+	set tag(tag) {
+		this._tag = tag
+	}
+
+	/**
+	 * Getter for tag
+	 * After first use of tag change with placeholder
+	 * 
+	 * @return {String}
+	 */
+	get tag() {
+		const tag = this._tag
+		this.tag = this.tagHolder
+
+		return tag
 	}
 
 	/**
@@ -16,7 +38,6 @@ class Log {
 	 * @param  {String} message Message to print to console
 	 */
 	info(message) {
-		console.log(this)
 		console.log(this.tag + chalk.white(message))
 	}
 

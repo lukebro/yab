@@ -7,10 +7,6 @@ class Command {
 	 */
 	constructor(output) {
 		this.log = output
-		this.info = output.info
-		this.list = output.list
-		this.warn = output.warn
-		this.error = output.error
 		this.name = 'Command'
 		this.description = 'Command description'
 
@@ -53,6 +49,22 @@ class Command {
 
 	setConfig(config) {
 		this.config = config
+	}
+
+	info(message) {
+		this.log.info(message)
+	}
+
+	list(message) {
+		this.log.list(message)
+	}
+
+	warn(message) {
+		this.log.warn(message)
+	}
+
+	error(message) {
+		this.log.error(message)
 	}
 
 }

@@ -75,7 +75,7 @@ class Client {
 		command.setArgs(this.cli.inputs)
 		command.setFlags(this.cli.flags)
 		command.setConfig(this.config)
-		command.execute()
+		command.execute(this.input)
 	}
 
 	/**
@@ -102,11 +102,14 @@ class Client {
 		output.push(chalk.blue.italic.bold('commands'))
 		for (let command in this.commands) {
 			output.push(Array(6).join(' ')
-				+ chalk.bold.red(this.commands[command].name)
-				+ Array(this.commands[command].name.length - longest).join(' ')
+				+ chalk.bold.red('yab ' + this.commands[command].name)
+				+ Array(longest - this.commands[command].name.length  + 1).join(' ')
 				+ chalk.white(' - ' + this.commands[command].description))
 		}
-
+		output.push('')
+		output.push(chalk.blue.italic.bold('for more help visit'))
+		output.push(Array(6).join(' ') + chalk.bold.red('https://github.com/lukebro/yab#readme'))
+		output.push('\t')
 		return output.join('\n')
 	}
 
