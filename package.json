@@ -41,9 +41,6 @@
     "decompress-zip": "^0.3.0",
     "meow": "^3.7.0"
   },
-  "engines": {
-    "node": ">=6.0.0"
-  },
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-preset-es2015": "^6.9.0"
