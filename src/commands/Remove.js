@@ -6,15 +6,16 @@ class Remove extends Command {
 	 * Configure the command
 	 */
 	configure() {
-		this.setName('remove <name>')
+		this.setName('remove')
+			.setArgument('name')
 			.setDescription('remove a template')
 	}
 
 	/**
 	 * Execute the command
 	 */
-	execute() {
-		this.info('The template ' + this.highlight('ok') + ' has been removed.')
+	execute(name) {
+		this.info('The template ' + this.highlight(name) + ' has been removed.')
 	}
 
 }

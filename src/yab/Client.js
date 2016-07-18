@@ -16,7 +16,8 @@ class Client {
 	constructor(config) {
 		this.config = config
 		this.command = {}
-		this.commandInfo = new Set()
+		this.commandInfo = []
+		this.commandList = []
 		this.template = path.resolve(process.env.HOME + '/.yab')
 		this.current = process.cwd()
 		this.log = new Log()
@@ -44,7 +45,8 @@ class Client {
 
 		for (let command in commands) {
 			this.command[command] = new commands[command](this.log)
-			this.commandInfo.add(this.getCommandInfo(this.command[command]))
+			this.commandInfo.push(this.getCommandInfo(this.command[command]))
+			this.commandList.push(this.command[command].name)
 		}
 		
 	}
@@ -57,7 +59,9 @@ class Client {
 	getCommandInfo(command) {
 		return { 
 			name: command.name,
+			args: command.args,
 			description: command.description,
+			fullName: command.getFullName(),
 		}
 	}
 
@@ -65,16 +69,17 @@ class Client {
 	 * Execute the command
 	 */
 	execute() {
-		const name = this.isCommand(this.input) ? this.input : 'init'
+		const name = this.isCommand(this.input) ? this.input : 'default'
 		const command = this.command[name]
 		
 		command
-			.setArgs(this.cli.input)
+			.setInput(this.cli.input)
 			.setFlags(this.cli.flags)
 			.setConfig(this.config)
 			.setCurrent(this.current)
 			.setTemplate(this.template)
-			.execute(this.input)
+
+		command.execute(...this.determineArgs(command, this.cli.input))
 	}
 
 	/**
@@ -89,6 +94,12 @@ class Client {
 		this.input = this.cli.input[0] == null ? 'list' : this.cli.input[0]
 	}
 
+	determineArgs(command, input) {
+		const offset = command.default ? 0 : 1
+
+		return input.splice(offset, command.args.length)
+	}
+
 	/**
 	 * Check if current input is a command
 	 *
@@ -96,7 +107,7 @@ class Client {
 	 * @return {Boolean}
 	 */
 	isCommand(command) {
-		return (command in this.config.commands)
+		return this.commandList.includes(command)
 	}
 
 	/**
@@ -111,8 +122,8 @@ class Client {
 		output.push(chalk.blue.italic.bold('commands'))
 		this.commandInfo.forEach(command => {
 			output.push(Array(6).join(' ')
-				+ chalk.bold.red('yab ' + command.name)
-				+ Array(longest - command.name.length  + 1).join(' ')
+				+ chalk.bold.red('yab ' + command.fullName)
+				+ Array(longest - command.fullName.length  + 1).join(' ')
 				+ chalk.white(' - ' + command.description))
 		})
 		output.push('')
@@ -141,8 +152,8 @@ class Client {
 		let length = 0
 
 		this.commandInfo.forEach(command => {
-			if (command.name.length > length) {
-				length = command.name.length
+			if (command.fullName.length > length) {
+				length = command.fullName.length
 			}
 		})
 

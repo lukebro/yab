@@ -6,7 +6,7 @@ import Remove from './commands/Remove'
 const config = {
 	commands: {
 		'this': This,
-		'init': Init,
+		'default': Init,
 		'list': List,
 		'remove': Remove,
 	},

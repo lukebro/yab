@@ -6,15 +6,16 @@ class Init extends Command {
 	 * Configure the command
 	 */
 	configure() {
-		this.setName('<name>')
+		this.setName('')
+			.setArgument('name')
 			.setDescription('scaffold current directory with a template')
 	}
 
 	/**
 	 * Execute the command
 	 */
-	execute(template) {
-		this.info('Scaffolding the current directory with ' + this.highlight(template) + '.')
+	execute(name) {
+		this.info('Scaffolding the current directory with ' + this.highlight(name) + '.')
 	}
 
 }
