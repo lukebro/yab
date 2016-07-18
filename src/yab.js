@@ -5,4 +5,4 @@ import config from './config'
 
 const cli = new Client(config)
 
-cli.init()
+cli.run()

@@ -14,7 +14,7 @@ class Init extends Command {
 	 * Execute the command
 	 */
 	execute(template) {
-		this.info('Scaffolding this directory with ' + template)
+		this.info('Scaffolding the current directory with ' + this.highlight(template) + '.')
 	}
 
 }

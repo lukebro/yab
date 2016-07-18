@@ -69,6 +69,16 @@ class Log {
 	error(message) {
 		console.log(this.tag + chalk.red(message))
 	}
+
+	/**
+	 * Highlight a phrase
+	 * 
+	 * @param  {String} phrase
+	 * @return {String}
+	 */
+	highlight(phrase) {
+		return chalk.yellow.italic(phrase)
+	}
 }
 
 export default Log

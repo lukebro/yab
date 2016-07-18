@@ -8,15 +8,13 @@ class This extends Command {
 	configure() {
 		this.setName('this <name>')
 			.setDescription('create a new template from the current directory')
-
-		return this
 	}
 
 	/**
 	 * Execute the command
 	 */
-	execute(template) {
-		this.info('Creating a template of current directory with name ' + template)
+	execute() {
+		this.info('Creating template ' + this.highlight(this.args[1]) + ' from current directory.')
 	}
 
 }

@@ -10,13 +10,16 @@ class Client {
 
 	/**
 	 * Create a new instance of a receiver
+	 *
+	 * @param {Object} config Configuration object
 	 */
 	constructor(config) {
 		this.config = config
-		this.commands = {}
+		this.command = {}
+		this.commandInfo = new Set()
 		this.template = path.resolve(process.env.HOME + '/.yab')
 		this.current = process.cwd()
-		this.log = new Log
+		this.log = new Log()
 
 		this.loadCommands()
 		this.initCli()
@@ -25,7 +28,7 @@ class Client {
 	/**
 	 * Initialize the receiver sequence
 	 */
-	init() {
+	run() {
 		if (! fs.existsSync(this.template)) {
 			fs.mkdirSync(this.template);
 		}
@@ -34,19 +37,14 @@ class Client {
 	}
 
 	/**
-	 * Check if current input is a command
-	 * @return {Boolean}
-	 */
-	isCommand(command) {
-		return ! (command in this.config.commands) ? false : true
-	}
-
-	/**
 	 * Load the command from config
 	 */
 	loadCommands() {
-		for (let command in this.config.commands) {
-			this.commands[command] = this.parseCommand(this.config.commands[command])
+		const commands = this.config.commands
+
+		for (let command in commands) {
+			this.command[command] = new commands[command](this.log)
+			this.commandInfo.add(this.getCommandInfo(this.command[command]))
 		}
 		
 	}
@@ -56,12 +54,10 @@ class Client {
 	 * @param  {Object} command 
 	 * @return {Object}
 	 */
-	parseCommand(command) {
-		const cmd = new command(this.log)
+	getCommandInfo(command) {
 		return { 
-			name: cmd.name,
-			description: cmd.description,
-			_: cmd
+			name: command.name,
+			description: command.description,
 		}
 	}
 
@@ -70,16 +66,19 @@ class Client {
 	 */
 	execute() {
 		const name = this.isCommand(this.input) ? this.input : 'init'
-		const command = this.commands[name]._
+		const command = this.command[name]
 		
-		command.setArgs(this.cli.inputs)
-		command.setFlags(this.cli.flags)
-		command.setConfig(this.config)
-		command.execute(this.input)
+		command
+			.setArgs(this.cli.input)
+			.setFlags(this.cli.flags)
+			.setConfig(this.config)
+			.setCurrent(this.current)
+			.setTemplate(this.template)
+			.execute(this.input)
 	}
 
 	/**
-	 * Initialize the CLI
+	 * Initialize CLI
 	 */
 	initCli() {
 		this.cli = meow({
@@ -88,6 +87,16 @@ class Client {
 		})
 
 		this.input = this.cli.input[0] == null ? 'list' : this.cli.input[0]
+	}
+
+	/**
+	 * Check if current input is a command
+	 *
+	 * @param {String} command
+	 * @return {Boolean}
+	 */
+	isCommand(command) {
+		return (command in this.config.commands)
 	}
 
 	/**
@@ -100,16 +109,17 @@ class Client {
 		const longest = this.longestCommand()
 
 		output.push(chalk.blue.italic.bold('commands'))
-		for (let command in this.commands) {
+		this.commandInfo.forEach(command => {
 			output.push(Array(6).join(' ')
-				+ chalk.bold.red('yab ' + this.commands[command].name)
-				+ Array(longest - this.commands[command].name.length  + 1).join(' ')
-				+ chalk.white(' - ' + this.commands[command].description))
-		}
+				+ chalk.bold.red('yab ' + command.name)
+				+ Array(longest - command.name.length  + 1).join(' ')
+				+ chalk.white(' - ' + command.description))
+		})
 		output.push('')
 		output.push(chalk.blue.italic.bold('for more help visit'))
 		output.push(Array(6).join(' ') + chalk.bold.red('https://github.com/lukebro/yab#readme'))
 		output.push('\t')
+
 		return output.join('\n')
 	}
 
@@ -130,11 +140,11 @@ class Client {
 	longestCommand() {
 		let length = 0
 
-		for (let command in this.commands) {
-			if (this.commands[command].name.length > length) {
-				length = this.commands[command].name.length 
+		this.commandInfo.forEach(command => {
+			if (command.name.length > length) {
+				length = command.name.length
 			}
-		}
+		})
 
 		return length
 	}

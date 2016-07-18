@@ -8,15 +8,13 @@ class List extends Command {
 	configure() {
 		this.setName('list')
 			.setDescription('list all available templates')
-
-		return this
 	}
 
 	/**
 	 * Execute the command
 	 */
 	execute() {
-		this.info('Listing all the templates.')
+		this.info('These are the current templates saved:')
 	}
 
 }
