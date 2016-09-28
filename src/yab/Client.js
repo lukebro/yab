@@ -10,7 +10,9 @@ class Client {
 
 	/**
 	 * Create a new instance of a receiver
+	 * 
 	 *
+	 * test
 	 * @param {Object} config Configuration object
 	 */
 	constructor(config) {

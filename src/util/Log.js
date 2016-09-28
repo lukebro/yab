@@ -46,10 +46,10 @@ class Log {
 	 * 
 	 * @param  {Array}  items Items to print to console
 	 */
-	list(...messages) {
+	list(messages) {
 		messages.forEach(function (message) {
-			console.log(this.tagHolder + chalk.yellow.italic(message))
-		})
+			console.log(this.tagHolder  + chalk.yellow.italic(message))
+		}.bind(this))
 	}
 
 	/**
@@ -67,6 +67,7 @@ class Log {
 	 * @param  {String} message Error to print to console
 	 */
 	error(message) {
+		
 		console.log(this.tag + chalk.red(message))
 	}
 

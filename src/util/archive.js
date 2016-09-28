@@ -23,6 +23,8 @@ const Archive = {
 			dot: true,
 			ignore: ignore,
 		}]).finalize()
+
+		return true
 	},
 
 	/**
@@ -34,7 +36,7 @@ const Archive = {
 	unzip(fromPath, toPath) {
 
 		if (! fs.existsSync(fromPath)) {
-			throw Error('File does not exist')
+			return false
 		}
 
 		const unzipper = new decompress(fromPath)
@@ -42,6 +44,8 @@ const Archive = {
 		unzipper.extract({
 			path: toPath
 		})
+
+		return true
 	}
 }
 
