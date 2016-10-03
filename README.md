@@ -44,13 +44,8 @@ yab remove <name>
 ```
 
 ```bash
-<<<<<<< HEAD
-# Show all commands.
-yab help
-=======
 # Show help menu
 yab --help
->>>>>>> dev
 ```
 
 ## storage
