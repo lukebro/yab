@@ -1,6 +1,6 @@
 {
   "name": "yab",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "yet another bootstrapper",
   "main": "lib/yab.js",
   "bin": {
@@ -35,7 +35,10 @@
     "url": "https://github.com/lukebro/yab/issues"
   },
   "homepage": "https://github.com/lukebro/yab#readme",
-  "os": ["darwin", "linux"],
+  "os": [
+    "darwin",
+    "linux"
+  ],
   "dependencies": {
     "archiver": "^1.0.0",
     "chalk": "^1.1.3",
