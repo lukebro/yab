@@ -1,6 +1,6 @@
 {
   "name": "yab",
-  "version": "0.2.0",
+  "version": "0.2.2",
   "description": "yet another bootstrapper",
   "main": "lib/yab.js",
   "bin": {
