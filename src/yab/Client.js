@@ -3,8 +3,6 @@ import meow from 'meow'
 import path from 'path'
 import chalk from 'chalk'
 import Log from '../util/Log'
-import help from '../text/help'
-import description from '../text/description'
 
 class Client {
 
