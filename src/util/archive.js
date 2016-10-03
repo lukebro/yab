@@ -13,9 +13,16 @@ const Archive = {
 	 * @param  {Object} options  Options for zipping file
 	 */
 	zip(name, fromPath, toPath, ignore = []) {
+		console.log('zipping motherfucker')
+		const fullPath = toPath + '/' + name
+
+		if (fs.existsSync(fullPath)) {
+			return false
+		}
+
 		const archive = archiver('zip')
 
-		archive.pipe(fs.createWriteStream(toPath + '/' + name))
+		archive.pipe(fs.createWriteStream(fullPath))
 		archive.bulk([{
 			cwd: fromPath,
 			src: ['**/*'],
@@ -34,7 +41,7 @@ const Archive = {
 	 * @param  {String} toPath   Path where to unzip file
 	 */
 	unzip(fromPath, toPath) {
-
+		console.log('unzipping motherfucker')
 		if (! fs.existsSync(fromPath)) {
 			return false
 		}

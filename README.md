@@ -1,5 +1,5 @@
 # yet another bootstrapper 🌯
-A CLI tool that lets you save and bootstrap templates quick and easily.
+A CLI tool that lets you save and bootstrap templates quickly and easily.
 
 All templates must be initialized manually, none come out of the box.  The good news is you can make anything a template, just pop it into a directory and `yab this <name>` and boom thats it.
 

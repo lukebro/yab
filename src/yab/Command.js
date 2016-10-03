@@ -96,8 +96,8 @@ class Command {
 	 * @param {String} current
 	 * @return {this}
 	 */
-	setCurrent(current) {
-		this.current = current
+	setCurrent(cwd) {
+		this.cwd = cwd
 
 		return this
 	}

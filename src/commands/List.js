@@ -25,7 +25,9 @@ class List extends Command {
 		}
 
 		this.info('These are the current tempates saved:')
-		this.list(templates.map(function (template) {
+		this.list(templates.filter(function (template) {
+			return template.includes('.zip')
+		}).map(function (template) {
 			return template.split('.')[0]
 		}))
 	}

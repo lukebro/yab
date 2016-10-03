@@ -16,7 +16,7 @@ class Init extends Command {
 	 * Execute the command
 	 */
 	execute(name) {
-		const result = Archive.unzip(this.template + '/' + name + '.zip', this.current)
+		const result = Archive.unzip(this.template + '/' + name + '.zip', this.cwd)
 
 		if (! result) {
 			this.info('No templates exists!')

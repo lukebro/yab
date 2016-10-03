@@ -16,10 +16,13 @@ class This extends Command {
 	 * Execute the command
 	 */
 	execute(name) {
-		try {
-			Archive.zip(name + '.zip', this.current, this.template, this.config.ignore)
-		} catch(error) {
-			this.error('The template ' + name + ' does not exists.')
+
+		const result = Archive.zip(name + '.zip', this.cwd, this.template, this.config.ignore)
+
+		if (! result) {
+			this.error('The template ' + name + ' already exists.')
+			this.info('Try ' + this.highlight('yab remove hello && yab this hello') + ' to override the current template.')
+			return
 		}
 
 		this.info('Creating template ' + this.highlight(name) + ' from current directory.')

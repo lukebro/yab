@@ -21,9 +21,8 @@ class Client {
 		this.commandInfo = []
 		this.commandList = []
 		this.template = path.resolve(process.env.HOME + '/.yab')
-		this.current = process.cwd()
+		this.cwd = process.cwd()
 		this.log = new Log()
-
 		this.loadCommands()
 		this.initCli()
 	}
@@ -43,14 +42,11 @@ class Client {
 	 * Load the command from config
 	 */
 	loadCommands() {
-		const commands = this.config.commands
-
-		for (let command in commands) {
-			this.command[command] = new commands[command](this.log)
+		for (let command in this.config.commands) {
+			this.command[command] = new this.config.commands[command](this.log)
 			this.commandInfo.push(this.getCommandInfo(this.command[command]))
 			this.commandList.push(this.command[command].name)
-		}
-		
+		}	
 	}
 
 	/**
@@ -78,7 +74,7 @@ class Client {
 			.setInput(this.cli.input)
 			.setFlags(this.cli.flags)
 			.setConfig(this.config)
-			.setCurrent(this.current)
+			.setCurrent(this.cwd)
 			.setTemplate(this.template)
 
 		command.execute(...this.determineArgs(command, this.cli.input))
