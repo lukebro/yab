@@ -1,5 +1,5 @@
 # yet another bootstrapper 🌯
-A CLI tool that lets you save and bootstrap templates quick and easily.
+A CLI tool that lets you save and bootstrap templates quickly and easily.
 
 All templates must be initialized manually, none come out of the box.  The good news is you can make anything a template, just pop it into a directory and `yab this <name>` and boom thats it.
 
@@ -19,33 +19,38 @@ npm install -g yab
 ```
 
 ## usage
-yab keeps its interface simple with only four commands:
+yab keeps its interface simple with these commands:
 
 ```bash
-# Create a new template of the current directory and give it a name.
+# Create a new template of the current directory and give it a name
 # yab will save an entire copy of the directory
 yab this <name>
 ```
 
 ```bash
-# Scaffold the current directory with a template.
+# Scaffold the current directory with a template
 # yab will add the template to the current directory
 yab <name>
 ```
 
 ```bash
-# List the current templates saved in yab.
+# List the current templates saved in yab
 yab list
 ```
 
 ```bash
-# Remove a template.
+# Remove a template
 yab remove <name>
 ```
 
 ```bash
+<<<<<<< HEAD
 # Show all commands.
 yab help
+=======
+# Show help menu
+yab --help
+>>>>>>> dev
 ```
 
 ## storage
